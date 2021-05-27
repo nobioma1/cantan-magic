@@ -1,11 +1,9 @@
-import { ISetCard, SelectedSet } from '../../types';
+import { ISetCard } from '../../types';
 
-interface SetCardProps extends ISetCard {
-  selectedSet: SelectedSet;
-}
+interface SetCardProps extends ISetCard {}
 
 const SetCard = (props: SetCardProps) => {
-  const { setName, name, rarity, type, imageUrl, selectedSet } = props;
+  const { setName, name, rarity, type, imageUrl, releaseDate } = props;
   return (
     <div
       data-testid="test-set-card"
@@ -19,8 +17,8 @@ const SetCard = (props: SetCardProps) => {
           <img className="w-full h-full" src={imageUrl} alt={name} />
         </div>
         <div>
-          {/* release date is not available in the card object */}
-          <p>Release Date: {selectedSet?.releaseDate}</p>
+          {/* release date is not available in all card object */}
+          <p>Release Date: {releaseDate ?? '-'}</p>
           <p>Rarity: {rarity}</p>
           <p>Type: {type}</p>
         </div>

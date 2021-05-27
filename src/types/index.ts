@@ -8,8 +8,6 @@ export interface ISet {
   booster?: (string | string[])[];
 }
 
-export type SelectedSet = ISet | null;
-
 type ForeignName = {
   name: string;
   type: string;
@@ -41,6 +39,7 @@ export interface ISetCard {
   number: string;
   layout: string;
   printings: string[];
+  releaseDate?: string;
   legalities?: Legalities[];
   text?: string;
   power?: string;

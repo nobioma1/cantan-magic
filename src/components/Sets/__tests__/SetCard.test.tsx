@@ -25,13 +25,7 @@ describe('Set Card Component', () => {
     id: 'c206ab94-4325-5766-91d6-62b8f50aeac8',
     imageUrl:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=130550&type=card',
-    selectedSet: {
-      code: '2ED',
-      name: 'Unlimited Edition',
-      type: 'core',
-      releaseDate: '1993-12-01',
-      onlineOnly: false,
-    },
+    releaseDate: '1993-12-01',
   };
 
   test('renders card content appropriately', () => {

@@ -2,29 +2,29 @@ import { useEffect, useState } from 'react';
 
 import SetCard from './SetCard';
 import { useRequest } from 'hooks';
-import { ISetCard, SelectedSet } from 'types';
+import { ISet, ISetCard } from 'types';
 
 interface SetsGridProps {
-  selectedSet: SelectedSet;
+  selectedSetName: ISet['name'];
 }
 
-const SetsGrid = ({ selectedSet }: SetsGridProps) => {
+const SetsGrid = ({ selectedSetName }: SetsGridProps) => {
   const [cards, setCards] = useState<ISetCard[]>([]);
   const { isLoading, doRequest } = useRequest();
 
   useEffect(() => {
-    if (!selectedSet) return;
+    if (!selectedSetName) return;
 
     doRequest({
       method: 'get',
-      url: `/cards?setName=${selectedSet.name}`,
+      url: `/cards?setName=${selectedSetName}`,
       onSuccess: ({ cards }) => setCards(cards),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSet]);
+  }, [selectedSetName]);
 
   if (isLoading) {
-    return <p>Fetching cards for {selectedSet?.name}</p>;
+    return <p>Fetching cards for {selectedSetName}</p>;
   }
 
   return (
@@ -33,7 +33,7 @@ const SetsGrid = ({ selectedSet }: SetsGridProps) => {
         <div>
           <p>
             No information to display, please{' '}
-            {selectedSet
+            {selectedSetName
               ? 'select another set'
               : 'choose a set from the dropdown'}
             .
@@ -42,7 +42,7 @@ const SetsGrid = ({ selectedSet }: SetsGridProps) => {
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
           {cards.map((card) => (
-            <SetCard key={card.id} {...card} selectedSet={selectedSet} />
+            <SetCard key={card.id} {...card} />
           ))}
         </div>
       )}

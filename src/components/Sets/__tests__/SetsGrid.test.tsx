@@ -9,7 +9,7 @@ beforeEach(() => {
 
 describe('Sets Grid Component', () => {
   test('renders empty initial sets grid component', () => {
-    render(<SetsGrid selectedSet={null} />);
+    render(<SetsGrid selectedSetName={''} />);
 
     const textEl = screen.getByText(
       /No information to display, please choose a set from the dropdown./i
@@ -25,17 +25,7 @@ describe('Sets Grid Component', () => {
     );
 
     const { getByText } = await waitFor(() =>
-      render(
-        <SetsGrid
-          selectedSet={{
-            code: '2ED',
-            name: 'Unlimited Edition',
-            type: 'core',
-            releaseDate: '1993-12-01',
-            onlineOnly: false,
-          }}
-        />
-      )
+      render(<SetsGrid selectedSetName="Unlimited Edition" />)
     );
 
     const textEl = getByText(
@@ -104,17 +94,7 @@ describe('Sets Grid Component', () => {
     );
 
     const { getAllByTestId } = await waitFor(() =>
-      render(
-        <SetsGrid
-          selectedSet={{
-            code: '2ED',
-            name: 'Unlimited Edition II',
-            type: 'core',
-            releaseDate: '1993-12-01',
-            onlineOnly: false,
-          }}
-        />
-      )
+      render(<SetsGrid selectedSetName="Unlimited Edition II" />)
     );
 
     expect(getAllByTestId('test-set-card')).toHaveLength(2);

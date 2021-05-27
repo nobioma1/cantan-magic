@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useRequest } from 'hooks';
 import { Dropdown, Button } from '../shared';
-import { ISet, SelectedSet } from 'types';
+import { ISet } from 'types';
 
 interface SetFilterProps {
-  setSet(set: SelectedSet): void;
+  setSet(set: ISet['name']): void;
 }
 
 const SetFilter = ({ setSet }: SetFilterProps) => {
@@ -26,10 +26,7 @@ const SetFilter = ({ setSet }: SetFilterProps) => {
     const value = dropDownRef.current?.value;
     if (!value) return;
 
-    const set = sets.find((setObj) => setObj.name === value);
-    if (set) {
-      setSet(set);
-    }
+    setSet(value);
   };
 
   return (

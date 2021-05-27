@@ -68,20 +68,13 @@ describe('Set Filter Component', () => {
       render(<SetFilter setSet={setSetFn} />)
     );
 
-    fireEvent.change(getByTestId('DROPDOWN-SELECT'), {
+    const eventPayload = {
       target: { value: 'Fifth Edition' },
-    });
+    };
 
+    fireEvent.change(getByTestId('DROPDOWN-SELECT'), eventPayload);
     fireEvent.click(getByText(/gather/i));
-
-    expect(setSetFn).toHaveBeenCalledWith({
-      code: '5ED',
-      name: 'Fifth Edition',
-      type: 'core',
-      releaseDate: '1997-03-24',
-      block: 'Core Set',
-      onlineOnly: false,
-    });
+    expect(setSetFn).toHaveBeenCalledWith(eventPayload.target.value);
   });
 
   test('check for value after clicking Gather button', async () => {
@@ -100,9 +93,7 @@ describe('Set Filter Component', () => {
     fireEvent.change(getByTestId('DROPDOWN-SELECT'), {
       target: { value: '' },
     });
-
     fireEvent.click(getByText(/gather/i));
-
     expect(setSetFn).not.toHaveBeenCalled();
   });
 });
