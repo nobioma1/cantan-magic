@@ -99,4 +99,16 @@ describe('Sets Grid Component', () => {
 
     expect(getAllByTestId('test-set-card')).toHaveLength(2);
   });
+
+  test('Renders error screen if an error', async () => {
+    fetch.mockRejectOnce();
+
+    const { getByText } = await waitFor(() =>
+      render(<SetsGrid selectedSetName="Unlimited Edition II" />)
+    );
+
+    expect(
+      getByText(/Something went wrong fetching cards for Unlimited Edition II/i)
+    ).toBeInTheDocument();
+  });
 });

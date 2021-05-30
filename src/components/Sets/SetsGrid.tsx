@@ -10,7 +10,7 @@ interface SetsGridProps {
 
 const SetsGrid = ({ selectedSetName }: SetsGridProps) => {
   const [cards, setCards] = useState<ISetCard[]>([]);
-  const { isLoading, doRequest } = useRequest();
+  const { state, doRequest } = useRequest();
 
   useEffect(() => {
     if (!selectedSetName) return;
@@ -23,8 +23,16 @@ const SetsGrid = ({ selectedSetName }: SetsGridProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSetName]);
 
-  if (isLoading) {
+  if (state === 'loading') {
     return <p>Fetching cards for {selectedSetName}</p>;
+  }
+
+  if (state === 'error') {
+    return (
+      <p className="text-red-400">
+        Something went wrong fetching cards for {selectedSetName}
+      </p>
+    );
   }
 
   return (
