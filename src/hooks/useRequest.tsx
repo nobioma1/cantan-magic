@@ -9,9 +9,11 @@ interface IDoRequestParam {
   onError?(err: any): void;
 }
 
+type State = 'idle' | 'loading' | 'loaded' | 'error';
+
 const useRequest = () => {
   const [errors, setErrors] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState<State>('idle');
 
   const doRequest = async ({
     method,
@@ -19,23 +21,22 @@ const useRequest = () => {
     onSuccess,
     onError,
   }: IDoRequestParam) => {
-    setIsLoading(true);
-
+    setState('loading');
     try {
       const response = await fetch(`${BASE_URL}${url}`, { method });
       const data = await response.json();
       onSuccess?.(data);
+      setState('loaded');
       return data;
     } catch (err) {
       onError?.(err);
       setErrors(err);
-    } finally {
-      setIsLoading(false);
+      setState('error');
     }
   };
 
   return {
-    isLoading,
+    state,
     doRequest,
     errors,
   };
